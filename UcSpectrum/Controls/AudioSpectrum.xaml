@@ -1,0 +1,33 @@
+﻿<UserControl x:Class="UcSpectrum.Controls.AudioSpectrum"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:UcSpectrum.Controls"
+             xmlns:singleton="clr-namespace:UcSpectrum.Singleton"
+             mc:Ignorable="d"
+             VerticalAlignment="Stretch" 
+              DataContext="{Binding AnalyzerViewModel, 
+                                   Source={x:Static singleton:ViewModelLocator.Instance}}"
+             >
+    <UserControl.Resources>
+        <SolidColorBrush x:Key="_ba" Color="#289fdb" Opacity="0.5"/>
+    </UserControl.Resources>
+    <ItemsControl x:Name="Spectrum"
+                  ItemsSource="{Binding FrequencyBins}">
+        <ItemsControl.ItemsPanel>
+            <ItemsPanelTemplate>
+                <StackPanel Orientation="Horizontal"/>
+            </ItemsPanelTemplate>
+        </ItemsControl.ItemsPanel>
+        <ItemsControl.ItemTemplate>
+            <DataTemplate>
+                <local:AudioLine FrequencyBin="{Binding .}"
+                                    SpeedDropping="{Binding SpeedDropping, ElementName=SpectrumControl}"
+                                    SpeedRaising="{Binding SpeedRaising, ElementName=SpectrumControl}"
+                                    PitchColor="{Binding PitchColor, ElementName=SpectrumControl}"
+                                    Height="{Binding Height, ElementName=SpectrumControl}" Foreground="{DynamicResource _ba}" />
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>
+</UserControl>
